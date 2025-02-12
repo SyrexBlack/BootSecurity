@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Edit User</title>
+</head>
+<body>
+<h1>Edit User</h1>
+<form th:action="@{/admin/edit}" method="post" th:object="${user}">
+    <!-- Скрытое поле для ID -->
+    <input type="hidden" th:field="*{id}" />
+    <div>
+        <label>Username:</label>
+        <input type="text" th:field="*{username}" required />
+    </div>
+    <div>
+        <label>Password:</label>
+        <!-- Можно оставить поле пустым для сохранения текущего пароля или задать новый -->
+        <input type="password" th:field="*{password}" placeholder="Enter new password if needed" />
+    </div>
+    <div>
+        <label>Email:</label>
+        <input type="email" th:field="*{email}" required />
+    </div>
+    <div>
+        <label>Roles:</label>
+        <select name="roles" multiple="multiple">
+            <option th:each="role : ${allRoles}"
+                    th:value="${role.id}"
+                    th:text="${role.name}"
+                    th:selected="${user.roles.contains(role)}"></option>
+        </select>
+    </div>
+    <div>
+        <button type="submit">Update</button>
+    </div>
+</form>
+<br/>
+<a th:href="@{/admin}">Back to Admin Panel</a>
+</body>
+</html>
